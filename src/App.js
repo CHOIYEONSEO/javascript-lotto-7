@@ -1,6 +1,7 @@
 import { Random, Console } from "@woowacourse/mission-utils";
 import Lotto from "./Lotto.js";
 import Winning from "./Winning.js";
+import Match from "./Match.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -17,13 +18,13 @@ import Winning from "./Winning.js";
 
 class App {
   async run() {
-    const amount = await Console.readLineAsync("구입금액을 입력해 주세요.\n");
-    const amountUnit = 1000;
-    const purchasedNumber = amount / amountUnit;
+    const AMOUNT = await Console.readLineAsync("구입금액을 입력해 주세요.\n");
+    const AMOUNT_UNIT = 1000;
+    const PURCHASE_NUMBER = AMOUNT / AMOUNT_UNIT;
 
-    Console.print(`${purchasedNumber}개를 구입했습니다.`);
+    Console.print(`${PURCHASE_NUMBER}개를 구입했습니다.`);
     const LOTTO_NUMBERS = [];
-    for(let i = 0; i < purchasedNumber; i++) {
+    for(let i = 0; i < PURCHASE_NUMBER; i++) {
       const LOTTO_NUMBER = Lotto.generate().sort((a, b) => a - b);
       Console.print(LOTTO_NUMBER);
       LOTTO_NUMBERS.push(LOTTO_NUMBER);
@@ -37,6 +38,20 @@ class App {
     Console.print("");
 
     const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
+
+    Console.print("당첨 통계\n---");
+    const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
+    const MATCH = PRICE.map((price) => new Match(price));
+    
+    for(let i = 0; i < PURCHASE_NUMBER; i++) {
+      Winning.match(MATCH, LOTTO_NUMBERS[i], WINNING_LOTTO);
+    }
+
+    Console.print(`3개 일치 (5,000원) - ${MATCH[0].count}개`);
+    Console.print(`4개 일치 (50,000원) - ${MATCH[1].count}개`);
+    Console.print(`5개 일치 (1,500,000원) - ${MATCH[2].count}개`);
+    Console.print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${MATCH[3].count}개`);
+    Console.print(`6개 일치 (2,000,000,000원) - ${MATCH[4].count}개`);
 
     
 
