@@ -5,7 +5,7 @@ class Winning {
     constructor(numbers, bonus) {
       numbers = this.#validateNumbers(numbers);
       this.#numbers = numbers;
-      this.#validateBonus(bonus);
+      bonus = this.#validateBonus(bonus);
       this.#bonus = bonus;
     }
 
@@ -19,9 +19,9 @@ class Winning {
     }
 
     #validateBonus(bonus) {
-      if (bonus.length !== 1) {
-        throw new Error("[ERROR] 보너스 번호는 1개여야 합니다.");
-      }
+      // 보너스 번호 1개만 입력했는지 확인
+      bonus = Number(bonus);
+      return bonus;
     }
 
     static match(object, target, find) {
