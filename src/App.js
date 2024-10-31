@@ -1,5 +1,6 @@
 import { Random, Console } from "@woowacourse/mission-utils";
 import Lotto from "./Lotto.js";
+import Winning from "./Winning.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -30,12 +31,12 @@ class App {
     Console.print("");
 
     const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
-    const WINNING_LOTTO = new Lotto(WINNING_NUMBER.split(","));
     Console.print("");
 
     const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
     Console.print("");
 
+    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
 
     
 
