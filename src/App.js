@@ -28,6 +28,15 @@ class App {
       Console.print(LOTTO_NUMBER);
       LOTTO_NUMBERS.push(LOTTO_NUMBER);
     }
+    Console.print("");
+
+    const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n")
+    const WINNING_LOTTO = new Lotto(WINNING_NUMBER.split(","));
+
+
+
+    
+
     
 
 
