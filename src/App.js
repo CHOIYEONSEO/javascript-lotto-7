@@ -15,8 +15,9 @@ class App {
     const AMOUNT = await Console.readLineAsync("구입금액을 입력해 주세요.\n");
     const AMOUNT_UNIT = 1000;
     const PURCHASE_NUMBER = AMOUNT / AMOUNT_UNIT;
+    Console.print("");
 
-    Console.print(`${PURCHASE_NUMBER}개를 구입했습니다.`);
+    Console.print(`${PURCHASE_NUMBER}개를 구매했습니다.`);
     const LOTTO_NUMBERS = [];
     for(let i = 0; i < PURCHASE_NUMBER; i++) {
       const LOTTO_NUMBER = Lotto.generate().sort((a, b) => a - b);
@@ -47,8 +48,13 @@ class App {
     Console.print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${MATCH[3].count}개`);
     Console.print(`6개 일치 (2,000,000,000원) - ${MATCH[4].count}개`);
 
+    const PROFIT = MATCH.reduce((acc, cur, index) => {
+      cur = MATCH[index].price * MATCH[index].count;
+      return acc + cur;
+    }, 0);
     
-
+    const PROFIT_RATE = ((PROFIT / AMOUNT) * 100).toFixed(1);
+    Console.print(`총 수익률은 ${PROFIT_RATE}%입니다.`);
     
 
 
