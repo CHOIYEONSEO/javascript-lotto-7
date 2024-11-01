@@ -6,6 +6,7 @@ import InputView from "./View/InputView.js";
 import InputValidate from "./Model/InputValidate.js";
 import budgetValidate from "./Model/BudgetValidate.js";
 import OutputView from "./View/OutputView.js";
+import generateLotto from "./Model/generateLotto.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -17,7 +18,7 @@ import OutputView from "./View/OutputView.js";
 class App {
   async run() {
     let budget;
-    const BUDGET_UNIT = 1000;
+//    const BUDGET_UNIT = 1000;
     
     while (true) {
       const BUDGET = await InputView.readBudget();
@@ -32,19 +33,9 @@ class App {
       }
     }
     
-    const PURCHASE_NUMBER = budget / BUDGET_UNIT;
-    OutputView.printBlankLine();
-    
-    
-
-    Console.print(`${PURCHASE_NUMBER}개를 구매했습니다.`);
-    const LOTTO_NUMBERS = [];
-    for(let i = 0; i < PURCHASE_NUMBER; i++) {
-      const LOTTO_NUMBER = Lotto.generate().sort((a, b) => a - b);
-      Console.print(LOTTO_NUMBER);
-      LOTTO_NUMBERS.push(LOTTO_NUMBER);
-    }
-    Console.print("");
+//    const PURCHASE_NUMBER = budget / BUDGET_UNIT;
+    const LOTTO_TICKETS = generateLotto(budget);
+    OutputView.printTickets(LOTTO_TICKETS);
 
     const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
     Console.print("");
