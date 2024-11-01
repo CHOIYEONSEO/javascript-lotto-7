@@ -4,6 +4,7 @@ import Winning from "./Winning.js";
 import Match from "./Match.js";
 import InputView from "./View/InputView.js";
 import InputValidate from "./Model/InputValidate.js";
+import budgetValidate from "./Model/BudgetValidate.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -15,12 +16,14 @@ import InputValidate from "./Model/InputValidate.js";
 class App {
   async run() {
     let budget;
+    const BUDGET_UNIT = 1000;
     
     while (true) {
       const BUDGET = await InputView.readBudget();
 
       try {
         budget = new InputValidate(BUDGET).input;
+        budgetValidate(budget);
         break;
 
       } catch (error) {
@@ -28,8 +31,7 @@ class App {
       }
     }
     
-    const AMOUNT_UNIT = 1000;
-    const PURCHASE_NUMBER = budget / AMOUNT_UNIT;
+    const PURCHASE_NUMBER = budget / BUDGET_UNIT;
     Console.print("");
 
     Console.print(`${PURCHASE_NUMBER}개를 구매했습니다.`);
