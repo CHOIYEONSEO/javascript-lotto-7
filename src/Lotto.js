@@ -29,7 +29,7 @@ class Lotto {
     const CHECK = new Set(numbers);
 
     if (numbers.length != CHECK.size) {
-      const ERROR_MESSAGE = `[ERROR]  로또 번호는 서로 중복되지 않는 숫자여야 합니다.(Duplicate: ${numbers})`;
+      const ERROR_MESSAGE = `[ERROR] 로또 번호는 서로 중복되지 않는 숫자여야 합니다.(Duplicate: ${numbers})`;
       throw new Error(ERROR_MESSAGE);
     }
   }
