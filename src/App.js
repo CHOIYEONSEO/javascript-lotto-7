@@ -7,6 +7,7 @@ import InputValidate from "./Model/InputValidate.js";
 import budgetValidate from "./Model/BudgetValidate.js";
 import OutputView from "./View/OutputView.js";
 import generateLotto from "./Model/generateLotto.js";
+import bonusValidate from "./Model/bonusValidate.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -19,6 +20,7 @@ class App {
   async run() {
     let budget;
     let winningNumber;
+    let bonusNumber;
 //    const BUDGET_UNIT = 1000;
     
     while (true) {
@@ -55,9 +57,21 @@ class App {
     }
 
 //    const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
-    Console.print("");
+    OutputView.printBlankLine();
 
-    const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
+    while (true) {
+      const BONUS_NUMBER = await InputView.readBonus();
+
+      try {
+        bonusNumber = new InputValidate(BONUS_NUMBER).input;
+        bonusValidate(bonusNumber, winningNumber); //메서드 작성
+        break;
+      } catch (error) {
+        Console.print(error.message);
+      }
+    }
+
+//    const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
     Console.print("");
 
 //    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);

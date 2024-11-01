@@ -13,6 +13,11 @@ class InputView {
         return NUMBER;
     }
 
+    static async readBonus() {
+        const NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
+        return NUMBER;
+    }
+
 }
 
 export default InputView;
