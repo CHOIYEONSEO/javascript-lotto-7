@@ -18,6 +18,7 @@ import generateLotto from "./Model/generateLotto.js";
 class App {
   async run() {
     let budget;
+    let winningNumber;
 //    const BUDGET_UNIT = 1000;
     
     while (true) {
@@ -37,13 +38,29 @@ class App {
     const LOTTO_TICKETS = generateLotto(budget);
     OutputView.printTickets(LOTTO_TICKETS);
 
-    const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
+    while (true) {
+      winningNumber = [];
+      const WINNING_NUMBER = await InputView.readWinnig();
+
+      try {
+        WINNING_NUMBER.split(",").forEach((element, idx) => {
+          winningNumber.push(new InputValidate(element).input);
+        });
+        const WINNING_LOTTO = new Lotto(winningNumber);
+        break;
+
+      } catch (error) {
+        Console.print(error.message);
+      }
+    }
+
+//    const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
     Console.print("");
 
     const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
     Console.print("");
 
-    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
+//    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
 
     Console.print("당첨 통계\n---");
     const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
