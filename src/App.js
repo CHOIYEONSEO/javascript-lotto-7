@@ -2,6 +2,8 @@ import { Random, Console } from "@woowacourse/mission-utils";
 import Lotto from "./Lotto.js";
 import Winning from "./Winning.js";
 import Match from "./Match.js";
+import InputView from "./View/InputView.js";
+import InputValidate from "./Model/InputValidate.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -12,9 +14,22 @@ import Match from "./Match.js";
 
 class App {
   async run() {
-    const AMOUNT = await Console.readLineAsync("구입금액을 입력해 주세요.\n");
+    let budget;
+    
+    while (true) {
+      const BUDGET = await InputView.readBudget();
+
+      try {
+        budget = new InputValidate(BUDGET).input;
+        break;
+
+      } catch (error) {
+        Console.print(error.message);
+      }
+    }
+    
     const AMOUNT_UNIT = 1000;
-    const PURCHASE_NUMBER = AMOUNT / AMOUNT_UNIT;
+    const PURCHASE_NUMBER = budget / AMOUNT_UNIT;
     Console.print("");
 
     Console.print(`${PURCHASE_NUMBER}개를 구매했습니다.`);
@@ -53,7 +68,7 @@ class App {
       return acc + cur;
     }, 0);
     
-    const PROFIT_RATE = ((PROFIT / AMOUNT) * 100).toFixed(1);
+    const PROFIT_RATE = ((PROFIT / budget) * 100).toFixed(1);
     Console.print(`총 수익률은 ${PROFIT_RATE}%입니다.`);
     
 
