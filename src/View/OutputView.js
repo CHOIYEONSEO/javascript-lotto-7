@@ -14,7 +14,7 @@ class OutputView {
 
         Console.print(`${PURCHASE_NUMBER}개를 구매했습니다.`);
         numbers.forEach(number => {
-            Console.print(number);
+            Console.print(`[${number.join(", ")}]`);
         });
 
         this.printBlankLine();

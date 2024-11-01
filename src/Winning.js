@@ -3,25 +3,8 @@ class Winning {
     #bonus;
 
     constructor(numbers, bonus) {
-      numbers = this.#validateNumbers(numbers);
       this.#numbers = numbers;
-      bonus = this.#validateBonus(bonus);
       this.#bonus = bonus;
-    }
-
-    #validateNumbers(numbers) {
-      if (numbers.length !== 6) {
-        throw new Error("[ERROR] 로또 번호는 6개여야 합니다.");
-      }
-
-      numbers = numbers.map(num => Number(num));
-      return numbers;
-    }
-
-    #validateBonus(bonus) {
-      // 보너스 번호 1개만 입력했는지 확인
-      bonus = Number(bonus);
-      return bonus;
     }
 
     static match(object, target, find) {
