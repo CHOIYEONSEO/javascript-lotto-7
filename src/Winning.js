@@ -7,39 +7,55 @@ class Winning {
       this.#bonus = bonus;
     }
 
-    static match(object, target, find) {
-      const MATCH_NUMBER = [0, 0];
+    static match(object, target, answer) {
+      const MATCH_COUNT = {
+        numbers : 0,
+        bonus : false,
+      };
 
-      find.#numbers.forEach((number) => {
+      MATCH_COUNT.numbers = this.includeNumbers(target, answer);
+      MATCH_COUNT.bonus = this.includeBonus(target, answer);
+      this.updateCount(MATCH_COUNT.numbers, MATCH_COUNT.bonus, object);
+    }
+
+    static includeNumbers(target, answer) {
+      let count = 0;
+
+      answer.#numbers.forEach((number) => {
         if (target.includes(number)) {
-          MATCH_NUMBER[0] += 1;
+          count += 1;
         }
       });
 
-      if (target.includes(find.#bonus)) {
-        MATCH_NUMBER[1] += 1;
-      }
+      return count;
+    }
 
-      if (MATCH_NUMBER[0] == 3) {
+    static includeBonus(target, answer) {
+      return target.includes(answer.#bonus);
+    }
+
+    static updateCount(value, bonus, object) {
+      if (value == 3) {
         object[0].count += 1;
       }
 
-      if (MATCH_NUMBER[0] == 4) {
+      if (value == 4) {
         object[1].count += 1;
       }
 
-      if (MATCH_NUMBER[0] == 5) {
-        if (MATCH_NUMBER[1] == 0) {
+      if (value == 5) {
+        if (!bonus) {
           object[2].count += 1;
         } else {
           object[3].count += 1;
         }
       }
 
-      if (MATCH_NUMBER[0] == 6) {
+      if (value == 6) {
         object[4].count += 1;
       }
     }
+    
 }
 
 export default Winning;

@@ -8,6 +8,7 @@ import budgetValidate from "./Model/BudgetValidate.js";
 import OutputView from "./View/OutputView.js";
 import generateLotto from "./Model/generateLotto.js";
 import bonusValidate from "./Model/bonusValidate.js";
+import calculateProfit from "./Model/calculateProfit.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -73,33 +74,23 @@ class App {
 
     const WINNING_LOTTO = new Winning(winningNumber, bonusNumber);
 //    const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
-    Console.print("");
-
 //    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
-    const PURCHASE_NUMBER = LOTTO_TICKETS.length;
-    Console.print("당첨 통계\n---");
     const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
     const MATCH = PRICE.map((price) => new Match(price));
     
-    for(let i = 0; i < PURCHASE_NUMBER; i++) {
+    for(let i = 0; i < LOTTO_TICKETS.length; i++) {
       Winning.match(MATCH, LOTTO_TICKETS[i], WINNING_LOTTO);
     }
 
-    Console.print(`3개 일치 (5,000원) - ${MATCH[0].count}개`);
-    Console.print(`4개 일치 (50,000원) - ${MATCH[1].count}개`);
-    Console.print(`5개 일치 (1,500,000원) - ${MATCH[2].count}개`);
-    Console.print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${MATCH[3].count}개`);
-    Console.print(`6개 일치 (2,000,000,000원) - ${MATCH[4].count}개`);
+    OutputView.printMatch(MATCH);
 
     const PROFIT = MATCH.reduce((acc, cur, index) => {
       cur = MATCH[index].price * MATCH[index].count;
       return acc + cur;
     }, 0);
     
-    const PROFIT_RATE = ((PROFIT / budget) * 100).toFixed(1);
-    Console.print(`총 수익률은 ${PROFIT_RATE}%입니다.`);
-    
-
+    const PROFIT_RATE = calculateProfit(MATCH, budget);
+    OutputView.printProfit(PROFIT_RATE);
 
   }
 }
