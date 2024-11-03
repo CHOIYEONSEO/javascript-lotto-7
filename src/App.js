@@ -1,10 +1,7 @@
 import { Random, Console } from "@woowacourse/mission-utils";
-import Winning from "./Winning.js";
-import Match from "./Match.js";
-import OutputView from "./View/OutputView.js";
-import calculateProfit from "./Model/calculateProfit.js";
 import buyLotto from "./buyLotto.js";
 import { drawNumbers, drawBonus } from "./draw.js";
+import win from "./win.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -18,24 +15,7 @@ class App {
     const MY_LOTTO = await buyLotto();
     const WINNING_NUMBER = await drawNumbers();
     const BONUS_NUMBER = await drawBonus(WINNING_NUMBER);
-
-    const WINNING_LOTTO = new Winning(WINNING_NUMBER, BONUS_NUMBER);
-    const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
-    const MATCH = PRICE.map((price) => new Match(price));
-    
-    for(let i = 0; i < MY_LOTTO.LOTTO_TICKETS.length; i++) {
-      Winning.match(MATCH, MY_LOTTO.LOTTO_TICKETS[i], WINNING_LOTTO);
-    }
-
-    OutputView.printMatch(MATCH);
-
-    const PROFIT = MATCH.reduce((acc, cur, index) => {
-      cur = MATCH[index].price * MATCH[index].count;
-      return acc + cur;
-    }, 0);
-    
-    const PROFIT_RATE = calculateProfit(MATCH, MY_LOTTO.budget);
-    OutputView.printProfit(PROFIT_RATE);
+    win(MY_LOTTO, WINNING_NUMBER, BONUS_NUMBER);
 
   }
 }
