@@ -22,7 +22,6 @@ class App {
     let budget;
     let winningNumber;
     let bonusNumber;
-//    const BUDGET_UNIT = 1000;
     
     while (true) {
       const BUDGET = await InputView.readBudget();
@@ -37,7 +36,6 @@ class App {
       }
     }
     
-//    const PURCHASE_NUMBER = budget / BUDGET_UNIT;
     const LOTTO_TICKETS = generateLotto(budget);
     OutputView.printTickets(LOTTO_TICKETS);
 
@@ -57,7 +55,6 @@ class App {
       }
     }
 
-//    const WINNING_NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
     OutputView.printBlankLine();
 
     while (true) {
@@ -73,8 +70,6 @@ class App {
     }
 
     const WINNING_LOTTO = new Winning(winningNumber, bonusNumber);
-//    const BONUS_NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
-//    const WINNING_LOTTO = new Winning(WINNING_NUMBER.split(","), BONUS_NUMBER);
     const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
     const MATCH = PRICE.map((price) => new Match(price));
     
