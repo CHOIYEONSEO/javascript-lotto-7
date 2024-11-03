@@ -9,12 +9,12 @@ class InputView {
     }
 
     static async readWinnig() {
-        const NUMBER = await Console.readLineAsync("당첨 번호를 입력해 주세요.\n");
+        const NUMBER = await Console.readLineAsync("\n당첨 번호를 입력해 주세요.\n");
         return NUMBER;
     }
 
     static async readBonus() {
-        const NUMBER = await Console.readLineAsync("보너스 번호를 입력해 주세요.\n");
+        const NUMBER = await Console.readLineAsync("\n보너스 번호를 입력해 주세요.\n");
         return NUMBER;
     }
 

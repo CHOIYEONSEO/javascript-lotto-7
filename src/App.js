@@ -1,14 +1,10 @@
 import { Random, Console } from "@woowacourse/mission-utils";
-import Lotto from "./Lotto.js";
 import Winning from "./Winning.js";
 import Match from "./Match.js";
-import InputView from "./View/InputView.js";
-import InputValidate from "./Model/InputValidate.js";
-import budgetValidate from "./Model/BudgetValidate.js";
 import OutputView from "./View/OutputView.js";
-import generateLotto from "./Model/generateLotto.js";
-import bonusValidate from "./Model/bonusValidate.js";
 import calculateProfit from "./Model/calculateProfit.js";
+import buyLotto from "./buyLotto.js";
+import { drawNumbers, drawBonus } from "./draw.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -19,62 +15,16 @@ import calculateProfit from "./Model/calculateProfit.js";
 
 class App {
   async run() {
-    let budget;
-    let winningNumber;
-    let bonusNumber;
-    
-    while (true) {
-      const BUDGET = await InputView.readBudget();
+    const MY_LOTTO = await buyLotto();
+    const WINNING_NUMBER = await drawNumbers();
+    const BONUS_NUMBER = await drawBonus(WINNING_NUMBER);
 
-      try {
-        budget = new InputValidate(BUDGET).input;
-        budgetValidate(budget);
-        break;
-
-      } catch (error) {
-        Console.print(error.message);
-      }
-    }
-    
-    const LOTTO_TICKETS = generateLotto(budget);
-    OutputView.printTickets(LOTTO_TICKETS);
-
-    while (true) {
-      winningNumber = [];
-      const WINNING_NUMBER = await InputView.readWinnig();
-
-      try {
-        WINNING_NUMBER.split(",").forEach((element, idx) => {
-          winningNumber.push(new InputValidate(element).input);
-        });
-        const WINNING_LOTTO = new Lotto(winningNumber);
-        break;
-
-      } catch (error) {
-        Console.print(error.message);
-      }
-    }
-
-    OutputView.printBlankLine();
-
-    while (true) {
-      const BONUS_NUMBER = await InputView.readBonus();
-
-      try {
-        bonusNumber = new InputValidate(BONUS_NUMBER).input;
-        bonusValidate(bonusNumber, winningNumber); //메서드 작성
-        break;
-      } catch (error) {
-        Console.print(error.message);
-      }
-    }
-
-    const WINNING_LOTTO = new Winning(winningNumber, bonusNumber);
+    const WINNING_LOTTO = new Winning(WINNING_NUMBER, BONUS_NUMBER);
     const PRICE = [5000, 50000, 1500000, 30000000, 2000000000];
     const MATCH = PRICE.map((price) => new Match(price));
     
-    for(let i = 0; i < LOTTO_TICKETS.length; i++) {
-      Winning.match(MATCH, LOTTO_TICKETS[i], WINNING_LOTTO);
+    for(let i = 0; i < MY_LOTTO.LOTTO_TICKETS.length; i++) {
+      Winning.match(MATCH, MY_LOTTO.LOTTO_TICKETS[i], WINNING_LOTTO);
     }
 
     OutputView.printMatch(MATCH);
@@ -84,7 +34,7 @@ class App {
       return acc + cur;
     }, 0);
     
-    const PROFIT_RATE = calculateProfit(MATCH, budget);
+    const PROFIT_RATE = calculateProfit(MATCH, MY_LOTTO.budget);
     OutputView.printProfit(PROFIT_RATE);
 
   }

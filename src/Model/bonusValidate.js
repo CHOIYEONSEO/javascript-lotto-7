@@ -1,7 +1,12 @@
+import inputValidate from "./inputValidate.js";
+
 // 로또 validate와 중복됨
 export default function bonusValidate(number, lotto) {
+  number = inputValidate(number);
   properRange(number);
   duplicate(number, lotto);
+
+  return number;
 }
 
 function properRange(number) {

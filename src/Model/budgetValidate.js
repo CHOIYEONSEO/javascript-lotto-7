@@ -1,7 +1,12 @@
+import inputValidate from "./inputValidate.js";
+
 export default function budgetValidate(input) {
+  input = inputValidate(input);
   isZero(input);
   isNegative(input);
   properUnit(input);
+
+  return input;
 }
 
 function isZero(input) {

@@ -7,6 +7,10 @@ class OutputView {
         Console.print("");
     }
 
+    static printError(error) {
+        Console.print(error.message);
+    }
+
     static printTickets(numbers) {
         const PURCHASE_NUMBER = numbers.length;
 
@@ -16,8 +20,6 @@ class OutputView {
         numbers.forEach(number => {
             Console.print(`[${number.join(", ")}]`);
         });
-
-        this.printBlankLine();
     }
 
     static printMatch(object) {

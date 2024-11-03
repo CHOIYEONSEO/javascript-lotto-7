@@ -1,6 +1,6 @@
 import { Random } from "@woowacourse/mission-utils";
 
-export default function generateLotto(value) {
+export default function autoGenerate(value) {
   const PURCHASE_NUMBER = calculateCount(value);
   const LOTTO_TICKETS = [];
 
