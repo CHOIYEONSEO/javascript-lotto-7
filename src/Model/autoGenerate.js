@@ -1,23 +1,32 @@
 import { Random } from "@woowacourse/mission-utils";
 
-export default function autoGenerate(value) {
-  const PURCHASE_NUMBER = calculateCount(value);
-  const LOTTO_TICKETS = [];
+class AutoGenerate {
+  purchaseNumber;
+  lotto_tickets;
 
-  for(let i = 0; i < PURCHASE_NUMBER; i++) {
-    const LOTTO_NUMBER = pickNumbers();
-    LOTTO_TICKETS.push(LOTTO_NUMBER);
+  constructor(value) {
+    this.purchaseNumber = this.calculateCount(value);
+    this.lotto_tickets = this.generateTickets();
   }
 
-  return LOTTO_TICKETS;
+  calculateCount(value) {
+    const UNIT = 1000;
+
+    return value / UNIT;
+  }
+
+  generateTickets() {
+    const LOTTO_NUMBERS = [];
+    for(let i = 0; i < this.purchaseNumber; i++) {
+      LOTTO_NUMBERS.push(this.pickNumbers());
+    }
+
+    return LOTTO_NUMBERS;
+  }
+
+  pickNumbers() {
+    return Random.pickUniqueNumbersInRange(1, 45, 6).sort((a, b) => a - b);
+  }
 }
 
-function calculateCount(value) {
-  const UNIT = 1000;
-
-  return value / UNIT;
-}
-
-function pickNumbers() {
-  return Random.pickUniqueNumbersInRange(1, 45, 6).sort((a, b) => a - b);
-}
+export default AutoGenerate;

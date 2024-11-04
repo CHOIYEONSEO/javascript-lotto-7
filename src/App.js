@@ -1,7 +1,4 @@
-import { Random, Console } from "@woowacourse/mission-utils";
-import buyLotto from "./buyLotto.js";
-import { drawNumbers, drawBonus } from "./draw.js";
-import win from "./win.js";
+import LottoController from "./Controller/LottoController.js";
 // Console.readLineAsync() / Console.print() / Random.pickUniqueNumbersInRange(1, 45, 6)
 
 // 로또 번호의 숫자 범위는 1~45까지이다.
@@ -12,10 +9,8 @@ import win from "./win.js";
 
 class App {
   async run() {
-    const MY_LOTTO = await buyLotto();
-    const WINNING_NUMBER = await drawNumbers();
-    const BONUS_NUMBER = await drawBonus(WINNING_NUMBER);
-    win(MY_LOTTO, WINNING_NUMBER, BONUS_NUMBER);
+    const CONTROLLER = new LottoController;
+    await CONTROLLER.run();
 
   }
 }

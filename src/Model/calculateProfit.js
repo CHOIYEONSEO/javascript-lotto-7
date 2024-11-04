@@ -1,6 +1,6 @@
 export default function calculateProfit(object, amount) {
   const PROFIT = object.reduce((acc, cur, index) => {
-    cur = object[index].price * object[index].count;
+    cur = object[index].prize * object[index].count;
     return acc + cur;
   }, 0);
 
